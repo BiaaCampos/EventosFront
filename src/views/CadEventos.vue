@@ -3,37 +3,44 @@
     <div class="container">
       <p class="Login">Cadastrar Eventos</p>
       <div class="row">
-        <div class="col-md-6 margin-input" >
-          <label for="">Nome do Evento</label>
-          <input type="text" class="form-control inputs" placeholder="" />
+        <div class="col-md-6 margin-input">
+          <label for="NomeEvento">Nome do Evento</label>
+          <input v-model="formDataEvento.NomeEvento" type="text" id="NomeEvento" class="form-control inputs" placeholder="Digite o nome do Evento..." />
         </div>
         <div class="col-md-6 margin-input">
-          <label for="">Local do Evento</label>
-          <input type="text" class="form-control inputs" placeholder="" />
+          <label for="LocalEvento">Local do Evento</label>
+          <input v-model="formDataEvento.LocalEvento" type="text" id="LocalEvento" class="form-control inputs" placeholder="Digite o local do evento..." />
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 margin-input" >
-          <label for="">Data do Evento</label>
-          <input type="date"  class="form-control inputs">
+        <div class="col-md-4 margin-input">
+          <label for="DataEvento">Data do Evento</label>
+          <input v-model="formDataEvento.DataEvento" type="date" class="form-control inputs" id="DataEvento" />
         </div>
         <div class="col-md-4 margin-input">
-          <label for="">Valor do Ingresso</label>
-          <input type="number" min="1" class="form-control inputs" placeholder="" />
+          <label for="ValorIngresso">Valor do Ingresso</label>
+          <input v-model="formDataEvento.ValorIngresso" type="number" min="1" class="form-control inputs" id="ValorIngresso" placeholder="Valor do ingresso" />
         </div>
         <div class="col-md-4 margin-input">
-          <label for="">Quantidade de Ingressos</label>
-          <input type="number" min="1" class="form-control inputs" placeholder="" />
+          <label for="QtdLimiteIngresso">Quantidade de Ingressos</label>
+          <input v-model="formDataEvento.QtdLimiteIngresso" type="number" min="1" class="form-control inputs" id="QtdLimiteIngresso" placeholder="Quantidade de ingresso" />
+        </div>
+        <div class="col-md-4" id="ativo">
+          <label class="switch">
+            <input v-model="formDataEvento.Ativo" type="checkbox" @click="toggleCheckbox">
+            <div class="slider round"></div>
+          </label>
+          <p style="padding: 12px 0 0 12px">{{ formDataEvento.Ativo }}</p>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12 margin-input" >
-          <label for="">Descrição do Evento</label>
-          <textarea name="" class="form-control inputs"></textarea>
+        <div class="col-md-12 margin-input">
+          <label for="Descricao">Descrição do Evento</label>
+          <textarea v-model="formDataEvento.Descricao" class="form-control inputs"></textarea>
         </div>
       </div>
       <div class="cadEvento">
-        <button type="button" class="buttonEvento">Cadastrar</button>
+        <button type="button" class="buttonEvento" @click="cadastrarEvento">Cadastrar</button>
       </div>
     </div>
   </div>
@@ -41,14 +48,76 @@
 
 <script>
 import "../components/style/style.css";
+import { ref, onMounted } from 'vue';
+import axios from "axios";
+
 export default {
-  data() {
-    return {};
+  setup() {
+    const formDataEvento = ref({
+      NomeEvento: '',
+      LocalEvento: '',
+      DataEvento: '',
+      ValorIngresso: '',
+      QtdLimiteIngresso: '',
+      Ativo: false, // Initialize Ativo as false
+      Descricao: ''
+    });
+
+    const checkbox = ref(false);
+    const evento = ref([]);
+
+    const toggleCheckbox = () => {
+      checkbox.value = !checkbox.value;
+      // formDataEvento.Ativo = !formDataEvento.Ativo; // Update the value in formDataEvento
+    };
+
+    axios.interceptors.request.use((config) => {
+      console.log('Dados a serem enviados:', config.data);
+      return config;
+    });
+
+
+    const cadastrarEvento = () => {
+      const dataToSendEvent = {
+        NomeEvento: formDataEvento.value.NomeEvento,
+        LocalEvento: formDataEvento.value.LocalEvento,
+        DataEvento: formDataEvento.value.DataEvento,
+        ValorIngresso: formDataEvento.value.ValorIngresso, 
+        QtdLimiteIngresso: formDataEvento.value.QtdLimiteIngresso, 
+        Descricao: formDataEvento.value.Descricao, 
+        Ativo: formDataEvento.value.Ativo
+      };
+      axios
+        .post('https://localhost:7127/api/Evento', dataToSendEvent)
+        .then((response) => {
+          console.log('Dados enviados com sucesso:', response.data);
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar dados para o servidor:', error);
+        });
+    };
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get('https://localhost:7127/api/Evento');
+        evento.value = response.data.$values;
+        console.log(evento.value);
+      } catch (error) {
+        console.error('Erro na solicitação:', error);
+      }
+    });
+
+    return {
+      formDataEvento,
+      checkbox,
+      evento,
+      toggleCheckbox,
+      cadastrarEvento
+    };
   },
-  mounted() {},
-  methods: {},
 };
 </script>
+
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/lexend-deca');
@@ -162,4 +231,86 @@ input[type="date"]:focus {
 
 input[type="date"]:hover::-webkit-calendar-picker-indicator { opacity:0.05; }
 input[type="date"]:hover::-webkit-calendar-picker-indicator:hover { opacity:0.15; }
+.switch {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #101010;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #101010;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#ativo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  color: white;
+}
+.Login{
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding-top: 2em;
+  text-transform: uppercase;
+  font-size: 60px;
+  text-decoration: underline;
+  font-family:'Lexend Deca', sans-serif;
+}
+label {
+  color: white;
+}
+input {
+  border: none;
+}
 </style>

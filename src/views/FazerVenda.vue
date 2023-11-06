@@ -4,26 +4,26 @@
       <p class="Login">Venda</p>
       <div class="row">
         <div class="col-md-6 margin-input">
-          <label for="">Comprador</label>
-          <input type="number" class="form-control inputs" placeholder="" />
+          <label for="comprador">Comprador</label>
+          <input v-model="formData.idComprador" type="number" class="form-control inputs" id="comprador" placeholder="Comprador ID" />
         </div>
         <div class="col-md-6 margin-input">
-          <label for="">Evento</label>
-          <input type="number" class="form-control inputs" placeholder="" />
+          <label for="evento">Evento</label>
+          <input v-model="formData.idEventos" type="number" class="form-control inputs" id="evento" placeholder="Evento ID" />
         </div>
       </div>
       <div class="row">
-        <div class="col-md-8 margin-input" >
-          <label for="">Data do Evento</label>
-          <input type="date"  class="form-control inputs">
+        <div class="col-md-8 margin-input">
+          <label for="dataEvento">Data do Evento</label>
+          <input v-model="formData.data" type="date" class="form-control inputs" id="dataEvento" />
         </div>
         <div class="col-md-4 margin-input">
-          <label for="">Quantidade de Ingresso</label>
-          <input type="number" min="1" class="form-control inputs" placeholder="" />
+          <label for="qtdIngresso">Quantidade de Ingresso</label>
+          <input v-model="formData.qtdIngresso" type="number" min="1" class="form-control inputs" id="qtdIngresso" placeholder="Quantidade de ingresso" />
         </div>
       </div>
       <div class="cadEvento">
-        <button type="button" class="buttonEvento">Concluir</button>
+        <button type="button" class="buttonEvento" @click="concluirVenda">Concluir</button>
       </div>
     </div>
   </div>
@@ -31,12 +31,31 @@
 
 <script>
 import "../components/style/style.css";
+import axios from "axios";
+
 export default {
   data() {
-    return {};
+    return {
+      formData: {
+        idComprador: null,
+        idEventos: null,
+        data: null,
+        qtdIngresso: null,
+      },
+    };
   },
-  mounted() {},
-  methods: {},
+  methods: {
+    concluirVenda() {
+      axios
+        .post('https://localhost:7127/api/Venda', this.formData)
+        .then((response) => {
+          console.log('Venda concluída com sucesso:', response.data);
+        })
+        .catch((error) => {
+          console.error('Erro ao concluir a venda:', error);
+        });
+    },
+  },
 };
 </script>
 
