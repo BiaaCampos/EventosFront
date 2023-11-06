@@ -3,23 +3,31 @@
     <div class="container">
       <p class="Login">Comprador</p>
       <div class="row">
-        <div class="col-md-6 margin-input" >
-          <label for="">Nome</label>
-          <input type="text" class="form-control inputs" placeholder="" />
+        <div class="col-md-6 margin-input">
+          <label for="nome">Nome</label>
+          <input v-model="formData.nome" type="text" class="form-control inputs" id="nome" placeholder="" />
         </div>
         <div class="col-md-6 margin-input">
-          <label for="">Sobrenome</label>
-          <input type="text" class="form-control inputs" placeholder="" />
+          <label for="sobrenome">Sobrenome</label>
+          <input v-model="formData.sobrenome" type="text" class="form-control inputs" id="sobrenome" placeholder="" />
         </div>
       </div>
       <div class="row">
         <div class="col-md-4 margin-input">
-          <label for="">Email</label>
-          <input type="email" min="1" class="form-control inputs" placeholder="" />
+          <label for="email">Email</label>
+          <input v-model="formData.email" type="email" class="form-control inputs" id="email" placeholder="" />
         </div>
-        <div class="col-md-4 margin-input" >
-          <label for="">Data do Evento</label>
-          <input type="date"  class="form-control inputs">
+        <div class="col-md-4 margin-input">
+          <label for="senha">Senha</label>
+          <input v-model="formData.senha" type="password" class="form-control inputs" id="senha" placeholder="" />
+        </div>
+        <div class="col-md-4 margin-input">
+          <label for="ra">RA</label>
+          <input v-model="formData.ra" type="number" class="form-control inputs" id="ra" placeholder="" />
+        </div>
+        <div class="col-md-4 margin-input">
+          <label for="dataEvento">Data do Evento</label>
+          <input v-model="formData.dataEvento" type="date" class="form-control inputs" id="dataEvento" />
         </div>
         <div class="col-md-4" id="ativo">
           <label class="switch">
@@ -30,43 +38,77 @@
         </div>
       </div>
       <div class="cadEvento">
-        <button type="button" class="buttonEvento">Cadastrar</button>
+        <button type="button" class="buttonEvento" @click="cadastrarEvento">Cadastrar</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 export default {
-  data() {
+  setup() {
+    const formData = ref({
+      nome: '',
+      sobrenome: '',
+      email: '',
+      senha: '', // Adicionado campo de senha
+      ra: '', // Adicionado campo de RA
+      dataEvento: '',
+    });
+
+    const checkbox = ref(false);
+    const evento = ref([]);
+
+    const toggleCheckbox = () => {
+      checkbox.value = !checkbox.value;
+    };
+
+    const cadastrarEvento = () => {
+      const dataToSend = {
+        nome: formData.value.nome,
+        sobrenome: formData.value.sobrenome,
+        email: formData.value.email,
+        senha: formData.value.senha, // Incluído o campo de senha
+        ra: formData.value.ra, // Incluído o campo de RA
+        dataEvento: formData.value.dataEvento,
+        checkbox: checkbox.value,
+      };
+
+      axios
+        .post('https://localhost:7127/api/comprador', dataToSend)
+        .then((response) => {
+          console.log('Dados enviados com sucesso:', response.data);
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar dados para o servidor:', error);
+        });
+    };
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get('https://localhost:7127/api/comprador');
+        evento.value = response.data.$values;
+        console.log(evento.value);
+      } catch (error) {
+        console.error('Erro na solicitação:', error);
+      }
+    });
+
     return {
-      loginData: {
-        username: "",
-        password: ""
-      },
-      isLoggedIn: false,
-      checkbox: false
+      formData,
+      checkbox,
+      evento,
+      toggleCheckbox,
+      cadastrarEvento,
     };
   },
-  methods: {
-    handleLogin() {
-      const { username, password } = this.loginData;
-
-      if (username === "user" && password === "password") {
-        this.isLoggedIn = true;
-        console.log("Usuário autenticado!");
-      } else {
-        console.log("Credenciais inválidas. Tente novamente.");
-      }
-    },
-    toggleCheckbox() {
-      this.checkbox = !this.checkbox
-      this.$emit('setCheckboxVal', this.checkbox)
-    }
-  }
 };
 </script>
+
+
 
 
 
