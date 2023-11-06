@@ -32,7 +32,7 @@
 <script>
 import "../components/style/style.css";
 import axios from "axios";
-
+//Gi modificou o cadEvento e Fazervenda
 export default {
   data() {
     return {
