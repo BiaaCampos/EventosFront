@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="cadEvento">
-        <button type="button" class="buttonEvento" @click="cadastrarEvento">Cadastrar</button>
+        <button type="button" class="buttonEvento" @click="cadastrarComprador">Cadastrar</button>
       </div>
     </div>
   </div>
@@ -66,19 +66,19 @@ export default {
       checkbox.value = !checkbox.value;
     };
 
-    const cadastrarEvento = () => {
+    const cadastrarComprador = () => {
       const dataToSend = {
         nome: formData.value.nome,
         sobrenome: formData.value.sobrenome,
         email: formData.value.email,
-        senha: formData.value.senha, // Incluído o campo de senha
-        ra: formData.value.ra, // Incluído o campo de RA
+        senha: formData.value.senha, 
+        ra: formData.value.ra, 
         dataEvento: formData.value.dataEvento,
         checkbox: checkbox.value,
       };
 
       axios
-        .post('https://localhost:7127/api/comprador', dataToSend)
+        .post('https://localhost:7127/api/Comprador', dataToSend)
         .then((response) => {
           console.log('Dados enviados com sucesso:', response.data);
         })
@@ -89,7 +89,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get('https://localhost:7127/api/comprador');
+        const response = await axios.get('https://localhost:7127/api/Comprador');
         evento.value = response.data.$values;
         console.log(evento.value);
       } catch (error) {
@@ -102,7 +102,7 @@ export default {
       checkbox,
       evento,
       toggleCheckbox,
-      cadastrarEvento,
+      cadastrarComprador,
     };
   },
 };
