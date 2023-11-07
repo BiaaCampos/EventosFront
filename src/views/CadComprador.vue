@@ -5,28 +5,28 @@
       <div class="row">
         <div class="col-md-6 margin-input">
           <label for="nome">Nome</label>
-          <input v-model="formData.nome" type="text" class="form-control inputs" id="nome" placeholder="" />
+          <input v-model="formData.nome" type="text" class="form-control inputs" id="nome" placeholder="Nome do comprador" />
         </div>
         <div class="col-md-6 margin-input">
           <label for="sobrenome">Sobrenome</label>
-          <input v-model="formData.sobrenome" type="text" class="form-control inputs" id="sobrenome" placeholder="" />
+          <input v-model="formData.sobrenome" type="text" class="form-control inputs" id="sobrenome" placeholder="Sobrenome do comprador" />
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 margin-input">
+        <div class="col-md-6 margin-input">
           <label for="email">Email</label>
-          <input v-model="formData.email" type="email" class="form-control inputs" id="email" placeholder="" />
+          <input v-model="formData.email" type="email" class="form-control inputs" id="email" placeholder="user@user.com" />
         </div>
-        <div class="col-md-4 margin-input">
+        <div class="col-md-2 margin-input">
           <label for="senha">Senha</label>
-          <input v-model="formData.senha" type="password" class="form-control inputs" id="senha" placeholder="" />
+          <input v-model="formData.senha" type="password" class="form-control inputs" id="senha" placeholder="...." />
         </div>
         <div class="col-md-4 margin-input">
           <label for="ra">RA</label>
-          <input v-model="formData.ra" type="number" class="form-control inputs" id="ra" placeholder="" />
+          <input v-model="formData.ra" type="number" class="form-control inputs" id="ra" placeholder="RA" />
         </div>
         <div class="col-md-4 margin-input">
-          <label for="dataEvento">Data do Evento</label>
+          <label for="dataEvento">Data do Cadastro</label>
           <input v-model="formData.dataEvento" type="date" class="form-control inputs" id="dataEvento" />
         </div>
         <div class="col-md-4" id="ativo">
@@ -54,8 +54,8 @@ export default {
       nome: '',
       sobrenome: '',
       email: '',
-      senha: '', // Adicionado campo de senha
-      ra: '', // Adicionado campo de RA
+      senha: '',
+      ra: '', 
       dataEvento: '',
     });
 
@@ -81,6 +81,14 @@ export default {
         .post('https://localhost:7127/api/Comprador', dataToSend)
         .then((response) => {
           console.log('Dados enviados com sucesso:', response.data);
+          // Limpar os campos após o envio bem-sucedido
+          formData.value.nome = '';
+          formData.value.sobrenome = '';
+          formData.value.email = '';
+          formData.value.senha = '';
+          formData.value.ra = '';
+          formData.value.dataEvento = '';
+          checkbox.value = false;
         })
         .catch((error) => {
           console.error('Erro ao enviar dados para o servidor:', error);
@@ -107,6 +115,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 
