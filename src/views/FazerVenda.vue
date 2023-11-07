@@ -5,21 +5,21 @@
       <div class="row">
         <div class="col-md-6 margin-input">
           <label for="comprador">Comprador</label>
-          <input v-model="formData.idComprador" type="number" class="form-control inputs" id="comprador" placeholder="Comprador ID" />
+          <input maxlength="7" v-model="formData.idComprador" type="number" class="form-control inputs" id="comprador" placeholder="Comprador ID" />
         </div>
         <div class="col-md-6 margin-input">
           <label for="evento">Evento</label>
-          <input v-model="formData.idEventos" type="number" class="form-control inputs" id="evento" placeholder="Evento ID" />
+          <input maxlength="7" v-model="formData.idEventos" type="number" class="form-control inputs" id="evento" placeholder="Evento ID" />
         </div>
       </div>
       <div class="row">
         <div class="col-md-8 margin-input">
           <label for="dataEvento">Data do Evento</label>
-          <input v-model="formData.data" type="date" class="form-control inputs" id="dataEvento" />
+          <input maxlength="8" v-model="formData.data" type="date" class="form-control inputs" id="dataEvento" />
         </div>
         <div class="col-md-4 margin-input">
           <label for="qtdIngresso">Quantidade de Ingresso</label>
-          <input v-model="formData.qtdIngresso" type="number" min="1" class="form-control inputs" id="qtdIngresso" placeholder="Quantidade de ingresso" />
+          <input maxlength="8" v-model="formData.qtdIngresso" type="number" min="1" class="form-control inputs" id="qtdIngresso" placeholder="Quantidade de ingresso" />
         </div>
       </div>
       <div class="cadEvento">
@@ -46,15 +46,43 @@ export default {
   },
   methods: {
     concluirVenda() {
+      if(this.formData.idComprador == null || this.formData.idComprador.trim() == ''){
+        console.log('Por Favor, Informe o Id do Comprador');
+        alert('Por Favor, Informe o Id do Comprador');
+        return;
+      }
+      if(this.formData.idEventos == null || this.formData.idEventos.trim() == ''){
+        console.log('Por Favor, Informe o Id do Evento');
+        alert('Por Favor, Informe o Id do Evento');
+        return;
+      }
+      if(this.formData.data == null || this.formData.data.trim() == ''){
+        console.log('Por Favor, Informe a Data do Evento');
+        alert('Por Favor, Informe a Data do Evento');
+        return;
+      }
+      if(this.formData.qtdIngresso == null || this.formData.qtdIngresso.trim() == ''){
+        console.log('Por Favor, Informe a quantiade de Ingresso');
+        alert('Por Favor, Informe a quantiade de Ingresso');
+        return;
+      }
       axios
         .post('https://localhost:7127/api/Venda', this.formData)
         .then((response) => {
           console.log('Venda concluída com sucesso:', response.data);
+          this.limparCampos();
+          return;
         })
         .catch((error) => {
           console.error('Erro ao concluir a venda:', error);
         });
     },
+    limparCampos(){
+      this.formData.idComprador = null;
+      this.formData.idEventos = null;
+      this.formData.data = null;
+      this.formData.qtdIngresso = null;
+    }
   },
 };
 </script>
