@@ -59,7 +59,7 @@ export default {
       DataEvento: '',
       ValorIngresso: '',
       QtdLimiteIngresso: '',
-      Ativo: false, // Initialize Ativo as false
+      Ativo: false,
       Descricao: ''
     });
 
@@ -68,29 +68,30 @@ export default {
 
     const toggleCheckbox = () => {
       checkbox.value = !checkbox.value;
-      // formDataEvento.Ativo = !formDataEvento.Ativo; // Update the value in formDataEvento
     };
-
-    axios.interceptors.request.use((config) => {
-      console.log('Dados a serem enviados:', config.data);
-      return config;
-    });
-
 
     const cadastrarEvento = () => {
       const dataToSendEvent = {
         NomeEvento: formDataEvento.value.NomeEvento,
         LocalEvento: formDataEvento.value.LocalEvento,
         DataEvento: formDataEvento.value.DataEvento,
-        ValorIngresso: formDataEvento.value.ValorIngresso, 
-        QtdLimiteIngresso: formDataEvento.value.QtdLimiteIngresso, 
-        Descricao: formDataEvento.value.Descricao, 
+        ValorIngresso: formDataEvento.value.ValorIngresso,
+        QtdLimiteIngresso: formDataEvento.value.QtdLimiteIngresso,
+        Descricao: formDataEvento.value.Descricao,
         Ativo: formDataEvento.value.Ativo
       };
       axios
         .post('https://localhost:7127/api/Evento', dataToSendEvent)
         .then((response) => {
           console.log('Dados enviados com sucesso:', response.data);
+          // Limpar os campos após o envio bem-sucedido
+          formDataEvento.value.NomeEvento = '';
+          formDataEvento.value.LocalEvento = '';
+          formDataEvento.value.DataEvento = '';
+          formDataEvento.value.ValorIngresso = '';
+          formDataEvento.value.QtdLimiteIngresso = '';
+          formDataEvento.value.Descricao = '';
+          checkbox.value = false;
         })
         .catch((error) => {
           console.error('Erro ao enviar dados para o servidor:', error);
@@ -117,6 +118,7 @@ export default {
   },
 };
 </script>
+
 
 
 <style scoped>
