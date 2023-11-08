@@ -31,6 +31,9 @@ import "./components/style/app.css";
               <div>
                 <routerLink to="/cadComprador" class="nav-link" aria-current="page">Cadastrar Comprador</routerLink>
               </div>
+              <div>
+                <routerLink to="/vizuComprador" class="nav-link" aria-current="page">Vizualizar Compradores</routerLink>
+              </div>
             </div>
           </div>
         </div>
