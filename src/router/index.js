@@ -25,6 +25,11 @@ const router = createRouter({
       path: '/cadComprador',
       name: 'cadComprador',
       component: () => import('../views/cadComprador.vue')
+    },
+    {
+      path: '/vizuComprador',
+      name: 'vizuComprador',
+      component: () => import('../components/List/ListComprador.vue')
     }
   ]
 })
