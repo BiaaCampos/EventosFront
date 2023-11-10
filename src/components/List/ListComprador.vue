@@ -1,14 +1,14 @@
-<script setup>
+<!-- <script setup>
 import { ref, computed, onMounted, reactive } from 'vue';
 import axios from 'axios';
 
-const evento = ref([]);
+const comprador = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await axios.get('https://localhost:7127/api/evento');
-    evento.value = response.data.$values;
-    console.log(evento.value);
+    const response = await axios.get('https://localhost:7127/api/comprador');
+    comprador.value = response.data.$values;
+    console.log(comprador.value);
   } catch (error) {
     console.error('Erro na solicitação:', error);
   }
@@ -17,8 +17,32 @@ onMounted(async () => {
 
 </script>
 
+  
 
-<template>
+  <script setup>
+  import { ref, onMounted, watchEffect } from 'vue';
+  import axios from 'axios';
+  
+  const evento = ref([]);
+  
+  onMounted(async () => {
+    await carregarCompradores();
+  });
+  
+  const carregarCompradores = async () => {
+    const response = await axios.get('https://localhost:7127/api/evento');
+    evento.value = response.data.$values;
+  };
+  
+  watchEffect(() => {
+    const cadastrarCompradorComponent = ref(null);
+  
+    cadastrarCompradorComponent.value && cadastrarCompradorComponent.value();
+  });
+  
+  </script>
+  
+  <template>
     <main>
       <div class="container-fluid d-flex justify-content-center">
         <div class="input-group mb-3 input-search">
@@ -28,17 +52,11 @@ onMounted(async () => {
       </div>
       <div class="centralizar">
         <div class="container bloco-anterior">
-          <div class="list-comprador">
-            <ul class="list-group list-group-flush list-list">
-              <li class="list-group-item test" v-for="(comprador, index) in comprador" :key="index">
-                {{ comprador.nome }} - {{ comprador.email }} <!-- Substitua "nome" e "email" pelos campos corretos do seu objeto comprador -->
-              </li>
-            </ul>
-          </div>
         </div>
-      </div>
+      </div> 
+      <CadastrarComprador @onCadastroSucesso="cadastrarCompradorComponent = $event" />  
     </main>
-  </template>
+  </template> -->
   
 
 
@@ -87,6 +105,7 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   height: 80vh;
+  margin-top: 1em;
 }
 
 .list-comprador{
