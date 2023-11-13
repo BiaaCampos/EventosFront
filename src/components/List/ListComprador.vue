@@ -27,6 +27,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="botao">
+        <a class="btn btn-primary btn-visu" href="/CadComprador" role="button">Cadastrar Comprador</a>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +87,26 @@ export default {
   text-transform: uppercase;
   margin-bottom: 1em;
   text-decoration: underline;
+}
+
+.botao{
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.btn-visu{
+  padding: 5px 25px;
+  background-color: transparent;
+  color: black;
+  border-color: black;
+}
+
+.btn-visu:hover{
+  padding: 5px 25px;
+  background-color: #003264;
+  color: white;
+  border-color: white;
 }
 
 </style>
