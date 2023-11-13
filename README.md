@@ -9,3 +9,9 @@ Giovanna Gabriele Costa Batista - RA: 1932252
 Diego Ryan Paduan - RA: 1942713
 
 Leonardo Novais - RA: 1934278
+
+
+
+# ADICIONAR
+
+npm install vue-router
