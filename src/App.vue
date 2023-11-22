@@ -71,8 +71,8 @@ import "./components/style/app.css";
 
 nav[data-v-7a7a37b1] {
   height: 100px;
-  background-color: #000235;
-  box-shadow: 0px 0px 20px 0px #009BFF;
+  background-color: #ffff;
+  box-shadow: 0px 2px 20px 3px #6FA7CB;
 }
 
 .navbar-toggler-icon {

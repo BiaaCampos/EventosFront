@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div id="ep-main"></div>
     <div class="container">
       <p class="Login">Comprador</p>
       <div class="row">
@@ -48,7 +48,6 @@
         {{ errorMessage }}
       </div>
     </div>
-  </div>
 </template>
 
 
@@ -141,15 +140,10 @@ export default {
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/lexend-deca');
-.app {
-  background-color: black;
-  background-image: url("../components/image/initialPage.png");
-  background-repeat: no-repeat;
-  background-position: cover;
-  background-size: 100%;
-  height: 100vh;
-  background-attachment: fixed;
-  font-family:'Lexend Deca', sans-serif;
+#ep-main {
+  background-color: white;
+  margin-top: 5em;
+  font-family: "Lexend Deca", sans-serif;
 }
 
 .switch {
@@ -218,22 +212,18 @@ input:checked + .slider:before {
   margin-top: 25px;
   color: white;
 }
-.Login{
+.Login {
   display: flex;
   justify-content: center;
-  color: white;
-  padding-top: 2em;
+  color: black !important;
   text-transform: uppercase;
   font-size: 60px;
-  text-decoration: underline;
-  font-family:'Lexend Deca', sans-serif;
+  font-family: "Lexend Deca", sans-serif;
 }
 label {
   color: white;
 }
-input {
-  border: none;
-}
+
 .cadEvento {
   display: flex;
   justify-content: center;
@@ -242,13 +232,14 @@ input {
 }
 
 .buttonEvento {
-  padding: 0.5em 3em;
-  border-radius: 2em;
-  border: none;
-  color: white;
-  background-color: #003264;
+  width: 250px;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid #699bf7;
+  color: #699bf7;
+  background: #fff;
+  box-shadow: 0px 4px 20px 0px rgba(105, 155, 247, 0.5);
 }
-
 .width-cont {
   display: flex;
   justify-content: center;
@@ -256,8 +247,14 @@ input {
   height: 100%;
 }
 .container {
-  width: 800px;
+  width: 925px;
+  height: 650px;
+  padding: 5em;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow:0px 4px 20px 0px rgba(105, 155, 247, 0.5);
 }
+
 
 .margin-input {
   margin-top: 10px;
@@ -279,12 +276,13 @@ input[type="date"] {
   
   cursor:pointer;
 }
-input[type="date"]:focus {
-  outline:none;
-  border-color:#3acfff;
-  box-shadow:0 0 0 0.25rem rgba(0, 120, 250, 0.1);
-}
+.inputs {
+  border: 1px solid gray;
 
+}
+input[type="date"]:focus {
+  outline: none;
+}
 ::-webkit-datetime-edit {}
 ::-webkit-datetime-edit-fields-wrapper {}
 ::-webkit-datetime-edit-month-field:hover,

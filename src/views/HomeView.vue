@@ -49,42 +49,6 @@ onMounted(async () => {
               </div>
             </div>
           </div>
-          <!-- <div class="col-sm-12 col-md-6 col-lg-3">
-            <div class="card" style="width: 20rem;">
-              <img src="https://oficial.unimar.br/wp-content/uploads/2023/05/BANNER_EVENTOS-1-1.jpg" class="card-img-top" alt="..." style="height: 8em;">
-              <div class="card-body">
-                <h5 class="card-title title-homePage">Semana de Fisioterapia</h5>
-                <p class="card-text">Para se inscrever, clique no botão abaixo:</p>
-                <div class="button-inscrever">
-                  <a href="#" class="btn btn-primary button-homePage">Inscrever</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6 col-lg-3">
-            <div class="card" style="width: 20rem;">
-              <img src="https://oficial.unimar.br/wp-content/uploads/2022/10/BANNER_EVENTOS-1-1.jpg" class="card-img-top" alt="..." style="height: 8em;">
-              <div class="card-body">
-                <h5 class="card-title title-homePage">Carreiras de TI</h5>
-                <p class="card-text">Para se inscrever, clique no botão abaixo:</p>
-                <div class="button-inscrever">
-                  <a href="#" class="btn btn-primary button-homePage">Inscrever</a>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="col-sm-12 col-md-6 col-lg-3">
-            <div class="card" style="width: 20rem;">
-              <img src="https://oficial.unimar.br/wp-content/uploads/2023/09/BANNER_EVENTOS-5.jpg" class="card-img-top" alt="..." style="height: 8em;">
-              <div class="card-body">
-                <h5 class="card-title title-homePage">Semana de Engenharia</h5>
-                <p class="card-text">Para se inscrever, clique no botão abaixo:</p>
-                <div class="button-inscrever">
-                  <a href="#" class="btn btn-primary button-homePage">Inscrever</a>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
