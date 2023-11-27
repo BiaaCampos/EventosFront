@@ -53,9 +53,7 @@ export default {
   },
   methods: {
     getEventos(){
-      // this.eventos = [{nome: 'TESTE'}, {nome: 'teste1'}];
       axios.get('https://localhost:7127/api/evento').then((res) => {
-        console.log(res);
         this.eventos = res.data.$values
       })
     }

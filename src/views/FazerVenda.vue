@@ -64,12 +64,12 @@ export default {
         return;
       }
       axios.post('https://localhost:7127/api/Venda?idComprador=2&idEvento=2&qntdIng=100', this.formData).then((response) => {
-        alert('Venda concluída com sucesso:', response.data);
+        alert('Venda concluída com sucesso!!');
         this.limparCampos();
         return;
       })
       .catch((error) => {
-        alert('Erro ao concluir a venda:');
+        alert('Erro ao concluir a venda!!');
         console.error('Erro ao concluir a venda:', error);
       });
     },
