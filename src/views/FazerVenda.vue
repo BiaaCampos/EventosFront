@@ -5,21 +5,21 @@
       <div class="row">
         <div class="col-md-6 margin-input">
           <label for="comprador">Comprador</label>
-          <input maxlength="7" v-model="formData.idComprador" type="number" class="form-control inputs" id="comprador" placeholder="Comprador ID" />
+          <input maxlength="7" v-model="formData.Compradores" type="number" class="form-control inputs" id="comprador" placeholder="Comprador ID" />
         </div>
         <div class="col-md-6 margin-input">
           <label for="evento">Evento</label>
-          <input maxlength="7" v-model="formData.idEventos" type="number" class="form-control inputs" id="evento" placeholder="Evento ID" />
+          <input maxlength="7" v-model="formData.Eventos" type="number" class="form-control inputs" id="evento" placeholder="Evento ID" />
         </div>
       </div>
       <div class="row">
         <div class="col-md-8 margin-input">
           <label for="dataEvento">Data do Evento</label>
-          <input maxlength="8" v-model="formData.data" type="date" class="form-control inputs" id="dataEvento" />
+          <input maxlength="8" v-model="formData.Data" type="date" class="form-control inputs" id="dataEvento" />
         </div>
         <div class="col-md-4 margin-input">
-          <label for="qtdIngresso">Quantidade de Ingresso</label>
-          <input maxlength="8" v-model="formData.qtdIngresso" type="number" min="1" class="form-control inputs" id="qtdIngresso" placeholder="Quantidade de ingresso" />
+          <label for="QtdIngresso">Quantidade de Ingresso</label>
+          <input maxlength="8" v-model="formData.QtdIngresso" type="number" min="1" class="form-control inputs" id="QtdIngresso" placeholder="Quantidade de ingresso" />
         </div>
       </div>
       <div class="cadEvento">
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { Alert } from "bootstrap";
 import "../components/style/style.css";
 import axios from "axios";
 
@@ -37,51 +38,46 @@ export default {
   data() {
     return {
       formData: {
-        idComprador: null,
-        idEventos: null,
-        data: null,
-        qtdIngresso: null,
+        Compradores: null,
+        Eventos: null,
+        Data: null,
+        QtdIngresso: null,
       },
     };
   },
   methods: {
     concluirVenda() {
-      if(this.formData.idComprador == null || this.formData.idComprador.trim() == ''){
-        console.log('Por Favor, Informe o Id do Comprador');
+      if(this.formData.Compradores == null){
         alert('Por Favor, Informe o Id do Comprador');
         return;
       }
-      if(this.formData.idEventos == null || this.formData.idEventos.trim() == ''){
-        console.log('Por Favor, Informe o Id do Evento');
+      if(this.formData.Eventos == null){
         alert('Por Favor, Informe o Id do Evento');
         return;
       }
-      if(this.formData.data == null || this.formData.data.trim() == ''){
-        console.log('Por Favor, Informe a Data do Evento');
+      if(this.formData.Data == null){
         alert('Por Favor, Informe a Data do Evento');
         return;
       }
-      if(this.formData.qtdIngresso == null || this.formData.qtdIngresso.trim() == ''){
-        console.log('Por Favor, Informe a quantiade de Ingresso');
+      if(this.formData.QtdIngresso == null){
         alert('Por Favor, Informe a quantiade de Ingresso');
         return;
       }
-      axios
-        .post('https://localhost:7127/api/Venda', this.formData)
-        .then((response) => {
-          console.log('Venda concluída com sucesso:', response.data);
-          this.limparCampos();
-          return;
-        })
-        .catch((error) => {
-          console.error('Erro ao concluir a venda:', error);
-        });
+      axios.post('https://localhost:7127/api/Venda?idComprador=2&idEvento=2&qntdIng=100', this.formData).then((response) => {
+        alert('Venda concluída com sucesso:', response.data);
+        this.limparCampos();
+        return;
+      })
+      .catch((error) => {
+        alert('Erro ao concluir a venda:');
+        console.error('Erro ao concluir a venda:', error);
+      });
     },
     limparCampos(){
-      this.formData.idComprador = null;
-      this.formData.idEventos = null;
-      this.formData.data = null;
-      this.formData.qtdIngresso = null;
+      this.formData.Compradores = null;
+      this.formData.Eventos = null;
+      this.formData.Data = null;
+      this.formData.QtdIngresso = null;
     }
   },
 };
@@ -103,8 +99,6 @@ export default {
   margin-top: 5em;
   font-family: "Lexend Deca", sans-serif;
 }
-
-
 label {
   color: white;
 }
