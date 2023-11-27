@@ -125,6 +125,7 @@ export default {
         .post("https://localhost:7127/api/Evento", dataToSendEvent)
         .then((response) => {
           console.log("Dados enviados com sucesso:", response.data);
+          alert("Evento cadastrado com sucesso!!");
           // Limpar os campos após o envio bem-sucedido
           formDataEvento.value.NomeEvento = "";
           formDataEvento.value.LocalEvento = "";
@@ -136,6 +137,7 @@ export default {
         })
         .catch((error) => {
           console.error("Erro ao enviar dados para o servidor:", error);
+          alert("Erro ao cadastrar o Evento!!");
         });
     };
 

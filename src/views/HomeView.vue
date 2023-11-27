@@ -10,8 +10,8 @@
     </div>
     <div class="container-fluid d-flex justify-content-center">
       <div class="input-group mb-3 input-search">
-        <input type="text" class="form-control input-text" placeholder="Pesquisar eventos" aria-label="Pesquisar eventos" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Pesquisar</button>
+        <input type="text" class="form-control input-text" v-model="buscar" placeholder="Pesquisar eventos" aria-label="Pesquisar eventos" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="pesquisar">Pesquisar</button>
       </div>
     </div>
     <div class="container-fluid d-flex justify-content-center" v-for="x in eventos">
@@ -48,13 +48,24 @@ import { ref, computed, onMounted, reactive } from 'vue';
 export default {
   data() {
     return {
-      eventos: []
+      eventos: [],
+      buscar: null
     };
   },
   methods: {
     getEventos(){
       axios.get('https://localhost:7127/api/evento').then((res) => {
         this.eventos = res.data.$values
+      })
+    },
+    pesquisar(){
+      if(this.buscar == null || this.buscar.length == 0){
+        this.getEventos();
+        return;
+      }
+      this.eventos = [];
+      axios.get('https://localhost:7127/api/Evento/GetByName/' + this.buscar).then((res) => {
+        this.eventos = res.data.$values;
       })
     }
   },
