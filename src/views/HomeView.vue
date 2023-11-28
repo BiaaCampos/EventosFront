@@ -1,5 +1,6 @@
 <template>
   <main>
+    <div class="teste">
     <div class="container-fluid d-flex justify-content-center">
       <div class="containerHome">
         <div class="image1"><p class="p"></p></div>
@@ -19,7 +20,7 @@
         <div class="row mt-4">
           <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="card" style="width: 20rem;">
-              <img src="https://oficial.unimar.br/wp-content/uploads/2022/10/BANNER_EVENTOS-5.jpg" class="card-img-top" alt="..." style="height: 8em;">
+              <img src="https://oficial.unimar.br/wp-content/uploads/2022/10/BANNER_EVENTOS-5.jpg" class="card-img-top" alt="..." >
               <div class="card-body">
                 <h5 class="card-title title-homePage">{{x.nomeEvento}}</h5>
                 <p class="card-text"><b>Valor dos ingressos:</b> R$ {{x.valorIngresso}}</p>
@@ -35,7 +36,7 @@
         </div>
       </div>
     </div>
-
+  </div>
   </main>
 </template>
 
@@ -43,8 +44,6 @@
 import "../components/style/style.css";
 import axios from "axios";
 import { ref, computed, onMounted, reactive } from 'vue';
-// import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -86,17 +85,25 @@ export default {
 }
 
 main {
-  height: calc(100vh - 100px);
-  background-image: url("../components/image/initialPage.png");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
-  overflow-x: hidden;
+  display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+}
+
+.teste {
+  width: 925px;
+  height: 650px;
+  padding: 5em;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow:0px 4px 20px 0px rgba(105, 155, 247, 0.5);
 }
 
 .image{
-  width: 83em;
-  height: 15em;
+  /* width: 83em;
+  height: 15em; */
   border-radius: 20px;
 }
 
