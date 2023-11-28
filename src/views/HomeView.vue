@@ -26,9 +26,9 @@
                 <p class="card-text"><b>Valor dos ingressos:</b> R$ {{x.valorIngresso}}</p>
                 <p class="card-text"><b>Local do Evento:</b> {{x.localEvento}}</p>
                 <br>
-                <p class="card-text text-center"><b>Para se inscrever, clique no botão abaixo:</b></p>
+                <p class="card-text text-center"><b>Para comprar, clique no botão abaixo:</b></p>
                 <div class="button-inscrever">
-                  <a href="#" class="btn btn-primary button-homePage">Inscrever</a>
+                  <a href="/FazerVenda" class="btn btn-primary button-homePage">Comprar</a>
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ main {
 
 .teste {
   width: 925px;
-  height: 650px;
+  height: 850px;
   padding: 5em;
   border-radius: 20px;
   background: #FFF;

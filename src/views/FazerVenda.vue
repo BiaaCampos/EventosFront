@@ -25,12 +25,18 @@
       <div class="cadEvento">
         <button type="button" class="buttonEvento" @click="concluirVenda">Concluir</button>
       </div>
+      <!-- Alertas -->
+      <div v-if="successMessage" class="alert alert-success top-alert" role="alert">
+        {{ successMessage }}
+      </div>
+      <div v-if="errorMessage" class="alert alert-danger top-alert" role="alert">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Alert } from "bootstrap";
 import "../components/style/style.css";
 import axios from "axios";
 
@@ -43,42 +49,39 @@ export default {
         Data: null,
         QtdIngresso: null,
       },
+      successMessage: '',
+      errorMessage: '',
     };
   },
   methods: {
     concluirVenda() {
-      if(this.formData.Compradores == null){
-        alert('Por Favor, Informe o Id do Comprador');
+      if (this.formData.Compradores == null || this.formData.Eventos == null || this.formData.Data == null || this.formData.QtdIngresso == null) {
+        this.errorMessage = 'Por favor, preencha todos os campos.';
         return;
       }
-      if(this.formData.Eventos == null){
-        alert('Por Favor, Informe o Id do Evento');
-        return;
-      }
-      if(this.formData.Data == null){
-        alert('Por Favor, Informe a Data do Evento');
-        return;
-      }
-      if(this.formData.QtdIngresso == null){
-        alert('Por Favor, Informe a quantiade de Ingresso');
-        return;
-      }
-      axios.post('https://localhost:7127/api/Venda?idComprador=2&idEvento=2&qntdIng=100', this.formData).then((response) => {
-        alert('Venda concluída com sucesso!!');
-        this.limparCampos();
-        return;
-      })
-      .catch((error) => {
-        alert('Erro ao concluir a venda!!');
-        console.error('Erro ao concluir a venda:', error);
-      });
+
+      axios.post('https://localhost:7127/api/Venda?idComprador=2&idEvento=2&qntdIng=100', this.formData)
+        .then((response) => {
+          this.successMessage = 'Venda concluída com sucesso!';
+          this.limparCampos();
+        })
+        .catch((error) => {
+          this.errorMessage = 'Erro ao concluir a venda. Tente novamente.';
+          console.error('Erro ao concluir a venda:', error);
+        });
     },
-    limparCampos(){
+    limparCampos() {
       this.formData.Compradores = null;
       this.formData.Eventos = null;
       this.formData.Data = null;
       this.formData.QtdIngresso = null;
-    }
+
+      // Esconder alertas após 3 segundos
+      setTimeout(() => {
+        this.successMessage = '';
+        this.errorMessage = '';
+      }, 3000);
+    },
   },
 };
 </script>
@@ -194,6 +197,16 @@ input[type="date"]:focus {
   color:rgba(0, 120, 250, 1);
   background:rgba(0, 120, 250, 1);
  
+}
+
+.top-alert {
+  position: fixed;
+  top: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 1000;
+  width: 30em;
 }
 
 input[type="date"]:hover::-webkit-calendar-picker-indicator { opacity:0.05; }
