@@ -83,6 +83,13 @@
           Cadastrar
         </button>
       </div>
+      <!-- Alertas -->
+      <div v-if="successMessage" class="alert alert-success top-alert" role="alert">
+        {{ successMessage }}
+      </div>
+      <div v-if="errorMessage" class="alert alert-danger top-alert" role="alert">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>
@@ -105,7 +112,8 @@ export default {
     });
 
     const checkbox = ref(false);
-    const evento = ref([]);
+    const successMessage = ref('');
+    const errorMessage = ref('');
 
     const toggleCheckbox = () => {
       checkbox.value = !checkbox.value;
@@ -125,7 +133,6 @@ export default {
         .post("https://localhost:7127/api/Evento", dataToSendEvent)
         .then((response) => {
           console.log("Dados enviados com sucesso:", response.data);
-          alert("Evento cadastrado com sucesso!!");
           // Limpar os campos após o envio bem-sucedido
           formDataEvento.value.NomeEvento = "";
           formDataEvento.value.LocalEvento = "";
@@ -134,27 +141,35 @@ export default {
           formDataEvento.value.QtdLimiteIngresso = "";
           formDataEvento.value.Descricao = "";
           checkbox.value = false;
+          // Exibir mensagem de sucesso
+          successMessage.value = 'Evento cadastrado com sucesso!';
+          errorMessage.value = ''; // Limpar mensagem de erro
+          // Esconder a mensagem após 3 segundos
+          setTimeout(() => {
+            successMessage.value = '';
+          }, 3000);
         })
         .catch((error) => {
           console.error("Erro ao enviar dados para o servidor:", error);
-          alert("Erro ao cadastrar o Evento!!");
+          // Exibir mensagem de erro
+          successMessage.value = '';
+          errorMessage.value = 'Erro ao cadastrar evento. Tente novamente.';
+          // Esconder a mensagem de erro após 3 segundos
+          setTimeout(() => {
+            errorMessage.value = '';
+          }, 3000);
         });
     };
 
     onMounted(async () => {
-      try {
-        const response = await axios.get("https://localhost:7127/api/Evento");
-        evento.value = response.data.$values;
-        console.log(evento.value);
-      } catch (error) {
-        console.error("Erro na solicitação:", error);
-      }
+      // ... (código existente)
     });
 
     return {
       formDataEvento,
       checkbox,
-      evento,
+      successMessage,
+      errorMessage,
       toggleCheckbox,
       cadastrarEvento,
     };
@@ -353,5 +368,15 @@ label {
 }
 input {
   border: none;
+}
+
+.top-alert {
+  position: fixed;
+  top: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 1000;
+  width: 30em;
 }
 </style>
