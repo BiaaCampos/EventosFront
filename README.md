@@ -15,3 +15,8 @@ Leonardo Novais - RA: 1934278
 # ADICIONAR
 
 npm install vue-router
+
+
+# Observações
+
+-> 1thiagoCRUZ - é a Bia
