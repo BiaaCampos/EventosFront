@@ -3,13 +3,17 @@
     <div class="container">
       <p class="Login">Venda</p>
       <div class="row">
-        <div class="col-md-6 margin-input">
-          <label for="comprador">Comprador</label>
-          <input maxlength="7" v-model="formData.Compradores" type="number" class="form-control inputs" id="comprador" placeholder="Comprador ID" />
+        <div class='col-md-6'>
+          <span>Comprador</span>
+          <select class="form-select" aria-label="Comprador" v-model="formData.idComprador">
+          <option v-for='x in Compradores' :value="x.id"> {{x.nome}} </option>
+          </select>
         </div>
-        <div class="col-md-6 margin-input">
-          <label for="evento">Evento</label>
-          <input maxlength="7" v-model="formData.Eventos" type="number" class="form-control inputs" id="evento" placeholder="Evento ID" />
+        <div class='col-md-6'>
+          <span>Evento</span>
+          <select class="form-select" aria-label="Evento" v-model="formData.idEvento">
+          <option v-for='x in eventos' :value="x.eventosId"> {{x.nomeEvento}} </option>
+          </select>
         </div>
       </div>
       <div class="row">
@@ -19,7 +23,7 @@
         </div>
         <div class="col-md-4 margin-input">
           <label for="QtdIngresso">Quantidade de Ingresso</label>
-          <input maxlength="8" v-model="formData.QtdIngresso" type="number" min="1" class="form-control inputs" id="QtdIngresso" placeholder="Quantidade de ingresso" />
+          <input maxlength="8" v-model="formData.qntdIng" type="number" min="1" class="form-control inputs" id="QtdIngresso" placeholder="Quantidade de ingresso" />
         </div>
       </div>
       <div class="cadEvento">
@@ -44,23 +48,35 @@ export default {
   data() {
     return {
       formData: {
-        Compradores: null,
-        Eventos: null,
+        idComprador: null,
+        idEvento: null,
         Data: null,
-        QtdIngresso: null,
+        qntdIng: null,
+        ativo: true
       },
+      Compradores: null,
+      eventos: null,
       successMessage: '',
       errorMessage: '',
     };
   },
   methods: {
+    getEventos(){
+      axios.get('https://localhost:7127/api/evento').then((res) => {
+        this.eventos = res.data.$values;
+      })
+    },
+    getComprador(){
+      axios.get('https://localhost:7127/api/Comprador').then((res) => {
+        this.Compradores = res.data.$values;
+      });
+    },
     concluirVenda() {
-      if (this.formData.Compradores == null || this.formData.Eventos == null || this.formData.Data == null || this.formData.QtdIngresso == null) {
+      if (this.formData.idComprador == null || this.formData.idEvento == null || this.formData.Data == null || this.formData.qntdIng == null) {
         this.errorMessage = 'Por favor, preencha todos os campos.';
         return;
       }
-
-      axios.post('https://localhost:7127/api/Venda?idComprador=2&idEvento=2&qntdIng=100', this.formData)
+      axios.post(`https://localhost:7127/api/Venda?idComprador=${this.formData.idComprador}&idEvento=${this.formData.idEvento}&qntdIng=${this.formData.qntdIng}&data=${this.formData.Data}`)
         .then((response) => {
           this.successMessage = 'Venda concluída com sucesso!';
           this.limparCampos();
@@ -71,10 +87,10 @@ export default {
         });
     },
     limparCampos() {
-      this.formData.Compradores = null;
-      this.formData.Eventos = null;
+      this.formData.idComprador = null;
+      this.formData.idEvento = null;
       this.formData.Data = null;
-      this.formData.QtdIngresso = null;
+      this.formData.qntdIng = null;
 
       // Esconder alertas após 3 segundos
       setTimeout(() => {
@@ -83,6 +99,10 @@ export default {
       }, 3000);
     },
   },
+  mounted: function () {
+    this.getEventos();
+    this.getComprador();
+  }
 };
 </script>
 

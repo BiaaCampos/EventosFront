@@ -26,9 +26,10 @@
           await axios.delete(`https://localhost:7127/api/Comprador/${this.compradorExclusao.id}`);
   
           // Atualiza a lista de compradores após a exclusão
-          const atualizacao = await axios.get('https://localhost:7127/api/Comprador');
+          alert("Comprador deletado com sucesso!!");
+          window.location.reload(true);
+          // const atualizacao = await axios.get('https://localhost:7127/api/Comprador');
           this.$emit('atualizarCompradores', atualizacao.data.$values);
-  
           // Fecha o modal de exclusão
           this.fecharModalExclusao();
         } catch (error) {

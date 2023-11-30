@@ -96,7 +96,7 @@ export default {
           formData.value.senha = '';
           formData.value.ra = '';
           formData.value.dataEvento = '';
-          checkbox.value = false;
+          checkbox.value = true;
           // Exibir mensagem de sucesso
           successMessage.value = 'Comprador cadastrado com sucesso!';
           errorMessage.value = ''; // Limpar mensagem de erro

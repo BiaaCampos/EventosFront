@@ -35,7 +35,7 @@
             id="DataEvento"
           />
         </div>
-        <div class="col-md-2 margin-input">
+        <div class="col-md-4 margin-input">
           <label for="QtdLimiteIngresso">Qtd Ingressos</label>
           <input
             v-model="formDataEvento.QtdLimiteIngresso"
@@ -55,17 +55,6 @@
             class="form-control inputs"
             placeholder="Digite o local do evento..."
           />
-        </div>
-        <div class="col-md-2" id="ativo">
-          <label class="switch">
-            <input
-              v-model="formDataEvento.Ativo"
-              type="checkbox"
-              @click="toggleCheckbox"
-            />
-            <div class="slider round"></div>
-          </label>
-          <p >{{ formDataEvento.Ativo }}</p>
         </div>
       </div>
       <div class="row">
@@ -107,7 +96,7 @@ export default {
       DataEvento: "",
       ValorIngresso: "",
       QtdLimiteIngresso: "",
-      Ativo: false,
+      // Ativo: false,
       Descricao: "",
     });
 
@@ -127,7 +116,7 @@ export default {
         ValorIngresso: formDataEvento.value.ValorIngresso,
         QtdLimiteIngresso: formDataEvento.value.QtdLimiteIngresso,
         Descricao: formDataEvento.value.Descricao,
-        Ativo: formDataEvento.value.Ativo,
+        //Ativo: formDataEvento.value.Ativo,
       };
       axios
         .post("https://localhost:7127/api/Evento", dataToSendEvent)
@@ -140,7 +129,7 @@ export default {
           formDataEvento.value.ValorIngresso = "";
           formDataEvento.value.QtdLimiteIngresso = "";
           formDataEvento.value.Descricao = "";
-          checkbox.value = false;
+          // checkbox.value = false;
           // Exibir mensagem de sucesso
           successMessage.value = 'Evento cadastrado com sucesso!';
           errorMessage.value = ''; // Limpar mensagem de erro

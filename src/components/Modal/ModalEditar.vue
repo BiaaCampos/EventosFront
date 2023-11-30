@@ -53,7 +53,9 @@
           this.error = null;
   
           console.log('Salvando edição...');
-          const response = await axios.put(`https://localhost:7127/api/Comprador/${this.compradorEditado.id}`, this.compradorEditado);
+          const response = await axios.put('https://localhost:7127/api/Comprador', this.compradorEditado);
+          alert("Comprador editado com sucesso!!");
+          window.location.reload(true);
           console.log('Comprador atualizado:', response.data);
           this.$emit('edicaoConcluida', response.data);
   

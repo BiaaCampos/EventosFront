@@ -23,7 +23,7 @@
             <td>{{ comprador.sobrenome }}</td>
             <td>{{ comprador.email }}</td>
             <td>{{ comprador.ra }}</td>
-            <td>{{ comprador.checkbox ? 'Ativo' : 'Inativo' }}</td>
+            <td>{{ comprador.checkbox ? 'Ativo' : 'Ativo' }}</td>
             <td>
               <button class="btn btn-primary btn-editar-excluir" @click="abrirModalEdicao(comprador)">Editar</button>
               <button class="btn btn-danger btn-editar-excluir" @click="abrirModalExclusao(comprador)">Excluir</button>
